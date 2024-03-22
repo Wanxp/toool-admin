@@ -1,30 +1,26 @@
 <template>
-  <router-view />
+  <el-config-provider :locale="currentLocale">
+    <router-view />
+    <ReDialog />
+  </el-config-provider>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  height: 100vh;
-  /* width: 100%; */
-}
-
-::-webkit-scrollbar {
-  background-color: #71717a;
-  border-radius: 10px;
-  width: 5px;
-  height:5px;
-}
-
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background: #71717a;
-}
-
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-  background: #fff;
-}
-</style>
+<script lang="ts">
+import { defineComponent } from "vue";
+import { ElConfigProvider } from "element-plus";
+import en from "element-plus/dist/locale/en.mjs";
+import zhCn from "element-plus/dist/locale/zh-cn.mjs";
+import { ReDialog } from "@/components/ReDialog";
+export default defineComponent({
+  name: "app",
+  components: {
+    [ElConfigProvider.name]: ElConfigProvider,
+    ReDialog
+  },
+  computed: {
+    currentLocale() {
+      return this.$storage.locale?.locale === "zh" ? zhCn : en;
+    }
+  }
+});
+</script>
